@@ -3,36 +3,36 @@ extends Control
 onready var DB = load("res://src/lib/json_reader.gd").new()
 onready var Helper = preload("res://src/lib/json_helper.gd").new()
 
+const frame_jilid = preload("res://asset/ui/utility/jilid_frame.res")
+
 signal switch_scene_done
 var setting_state = false
 var sound_state = true
+onready var info = $nav/top_py_info
 
 func _ready():
+	_starter()
+	_update_data()
+
+func _starter():
 	$setting_window/window/btn_close.connect("pressed",self, "setting_btn_close_pressed")
-	
 	$transition/AnimationPlayer.connect("animation_finished",self, "trasition_finished")
 	$transition.visible = true
 	$transition/AnimationPlayer.play("wipe_out");
 	
-	#--load data--
-	var data_pemain = DB.readJSON("pemain")
-	var data_penghargaan = DB.readJSON("penghargaan")
-	var data_jilid = DB.readJSON("jilid")
-	var data_bab = DB.readJSON("bab")
-	printraw(data_pemain)
-	print(data_penghargaan)
-	print(data_jilid)
-	print(data_bab)
+	info.get_data_bab()
+	info.get_data_jilid()
+	info.get_data_pemain()
+	info.get_data_penghargaan()
 
-func _process(delta):
-	if(delta):
-		var timeDict = OS.get_time()
-		var hour     = str(timeDict.hour)
-		var minute   = timeDict.minute
-		if(minute<10):
-			minute = str(minute)
-			minute ='0'+minute
-		$nav/top_py_info/watch.text = hour+':'+str(minute)
+func _update_data():
+	var pemain = info.get_data_pemain()
+	var jilid  = info.get_data_jilid()
+	#render
+	for n in jilid:
+		var obj = frame_jilid.instance()
+		obj.title.Label.text = "a"
+		$panel/scroll/contain.add_child(obj)
 
 func goto_scene(target: String, anim = "wipe")->void:
 	$transition/AnimationPlayer.play(anim+"_in")
