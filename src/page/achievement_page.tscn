@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://src/page/pageController.gd" type="Script" id=1]
 [ext_resource path="res://asset/ui/page/background/bg_achievement.png" type="Texture" id=2]
@@ -11,40 +11,42 @@
 [ext_resource path="res://asset/ui/button/story.png" type="Texture" id=9]
 [ext_resource path="res://asset/ui/button/story_press.png" type="Texture" id=10]
 [ext_resource path="res://asset/font/ARLRDBD_0.TTF" type="DynamicFontData" id=11]
-[ext_resource path="res://asset/ui/utility/sidebar.png" type="Texture" id=12]
-[ext_resource path="res://src/window/setting_window.res" type="PackedScene" id=13]
-[ext_resource path="res://asset/ui/utility/frame_achievement.png" type="Texture" id=14]
-[ext_resource path="res://asset/ui/utility/null.png" type="Texture" id=15]
+[ext_resource path="res://asset/ui/utility/penghargaan_frame.res" type="PackedScene" id=12]
+[ext_resource path="res://asset/ui/utility/sidebar.png" type="Texture" id=13]
+[ext_resource path="res://src/window/setting_window.res" type="PackedScene" id=14]
+[ext_resource path="res://src/window/dialog_window.res" type="PackedScene" id=15]
 [ext_resource path="res://src/transition.tscn" type="PackedScene" id=16]
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=1]
 size = 32
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 11 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.6, 0.6, 0.6, 0.0980392 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="DynamicFont" id=6]
-size = 24
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="Theme" id=4]
+ScrollContainer/styles/bg = SubResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 28
 outline_size = 3
+outline_color = Color( 1, 0.788235, 0.219608, 1 )
 use_filter = true
 font_data = ExtResource( 11 )
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=7]
 size = 24
-font_data = ExtResource( 11 )
-
-[sub_resource type="DynamicFont" id=9]
-size = 28
 font_data = ExtResource( 11 )
 
 [node name="achievement_page" type="Control"]
@@ -104,9 +106,9 @@ texture_hover = ExtResource( 10 )
 margin_left = 20.0
 margin_right = 326.0
 margin_bottom = 65.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "Achievement"
+text = "Pencapaian"
 valign = 1
 clip_text = true
 
@@ -115,7 +117,7 @@ margin_left = 23.0
 margin_top = 146.0
 margin_right = 840.0
 margin_bottom = 603.0
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="scroll" type="ScrollContainer" parent="panel"]
 anchor_right = 1.0
@@ -124,13 +126,20 @@ margin_left = 17.0
 margin_top = 14.0
 margin_right = -1.0
 margin_bottom = -9.0
+theme = SubResource( 4 )
 scroll_vertical_enabled = false
 
 [node name="contain" type="HBoxContainer" parent="panel/scroll"]
 custom_constants/separation = 10
 
-[node name="side_panel" type="TextureRect" parent="."]
+[node name="achievement#1" parent="panel/scroll/contain" instance=ExtResource( 12 )]
 visible = false
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 221.0
+margin_bottom = 227.0
+
+[node name="side_panel" type="TextureRect" parent="."]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -139,25 +148,27 @@ margin_left = -411.0
 margin_top = -290.5
 margin_right = -18.0
 margin_bottom = 332.5
-texture = ExtResource( 12 )
+texture = ExtResource( 13 )
 
 [node name="title" type="Label" parent="side_panel"]
 anchor_right = 1.0
 margin_bottom = 58.0
-custom_fonts/font = SubResource( 6 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Description"
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 1, 0.788235, 0.219608, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "Deskripsi"
 align = 1
 valign = 1
 max_lines_visible = 1
 
 [node name="panel" type="Panel" parent="side_panel"]
+editor/display_folded = true
 anchor_right = 1.0
 margin_left = 11.0
 margin_top = 62.0
 margin_right = -12.0
 margin_bottom = 524.0
-custom_styles/panel = SubResource( 7 )
+custom_styles/panel = SubResource( 6 )
 
 [node name="Label" type="Label" parent="side_panel/panel"]
 anchor_left = 0.5
@@ -168,47 +179,16 @@ margin_left = -176.0
 margin_top = -231.0
 margin_right = 176.0
 margin_bottom = 231.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "aaaa aaaa aaa aaa aaa aaaa aaaa aaaa aaaa aaa aaa aaa aaaa aaaa aaaa aaaa aaa aaa aaa aaaa aaaa aaaa aaaa aaa aaa aaa aaaa aaaa aaaa aaaa aaa aaa aaa aaaa aaaa "
-align = 3
 autowrap = true
 
-[node name="setting_window" parent="." instance=ExtResource( 13 )]
+[node name="setting_window" parent="." instance=ExtResource( 14 )]
 visible = false
 
-[node name="achievement#1" type="TextureButton" parent="."]
-margin_left = 40.0
-margin_top = 160.0
-margin_right = 261.0
-margin_bottom = 387.0
-texture_normal = ExtResource( 14 )
-
-[node name="TextureRect" type="TextureRect" parent="achievement#1"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -92.0
-margin_top = -94.5
-margin_right = 92.0
-margin_bottom = 94.5
-texture = ExtResource( 15 )
-expand = true
-stretch_mode = 7
-
-[node name="Label" type="Label" parent="achievement#1"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 230.0
-margin_bottom = 87.0
-custom_fonts/font = SubResource( 9 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Achievement Tittle Sample"
-align = 1
-autowrap = true
-clip_text = true
-max_lines_visible = 2
+[node name="dialog_window" parent="." instance=ExtResource( 15 )]
+visible = false
 
 [node name="transition" parent="." instance=ExtResource( 16 )]
 visible = false

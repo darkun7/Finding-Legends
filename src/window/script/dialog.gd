@@ -36,7 +36,6 @@ func _on_btn_skip_pressed():
 		if(len(message) == get_page()):
 			_on_btn_close_pressed()
 		else:
-			print(get_page())
 			label.percent_visible = 0
 			label.visible_characters = 0
 			label.set_bbcode(message[get_page()])
