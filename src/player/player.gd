@@ -1,34 +1,68 @@
 extends KinematicBody2D
 
-export var speed = 150
-export var move_speedx = Vector2(240, 0)
-export var move_speedy = Vector2(0, 240)
-var floor_normalx = Vector2(0, -1)
-var floor_normaly = Vector2(-1, 0)
-
+export var ACCELERATION = 2000
+export var MAX_SPEED = 500
+export var ROLL_SPEED = 120
+export var FRICTION = 2000
 onready var joystick = get_parent().get_parent().get_node("CanvasLayer/joystick/joystick_button")
-func _process(delta):
-	move_and_slide(joystick.get_value()*speed)
-	_move_left()
-	_move_right()
-	_move_up()
-	_move_bottom()
-	
-func _move_left():
-	if Input.is_action_pressed("ui_left"):
-		move_and_slide(-move_speedx, floor_normalx)
-		print("kiri")
-		
-func _move_right():
-	if Input.is_action_pressed("ui_right"):
-		move_and_slide(move_speedx, floor_normalx)
-		print("kanan")
 
-func _move_up():
-	if Input.is_action_pressed("ui_up"):
-		move_and_slide(-move_speedy, floor_normaly)
-		print("atas")
+enum {
+	MOVE,
+	ROLL,
+	ATTACK
+}
+
+var state = MOVE
+var velocity = Vector2.ZERO
+var roll_vector = Vector2.DOWN
+
+
+func _ready():
+	randomize()
+
+func _physics_process(delta):
+	move_and_slide(joystick.get_value()*MAX_SPEED)
+	match state:
+		MOVE:
+			move_state(delta)
 		
-func _move_bottom():
-	if Input.is_action_pressed("ui_down"):
-		move_and_slide(move_speedy, floor_normaly)
+		ROLL:
+			roll_state()
+		
+		ATTACK:
+			attack_state()
+	
+func move_state(delta):
+	var input_vector = Vector2.ZERO
+	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	input_vector = input_vector.normalized()
+	
+	if input_vector != Vector2.ZERO:
+		roll_vector = input_vector
+		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+	else:
+		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+	
+	move()
+	
+	if Input.is_action_just_pressed("roll"):
+		state = ROLL
+	
+	if Input.is_action_just_pressed("attack"):
+		state = ATTACK
+
+func roll_state():
+	velocity = roll_vector * ROLL_SPEED
+	move()
+
+func attack_state():
+	velocity = Vector2.ZERO
+
+func move():
+	velocity = move_and_slide(velocity)
+
+func roll_animation_finished():
+	velocity = velocity * 0.8
+	state = MOVE
+

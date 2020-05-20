@@ -12,13 +12,16 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 14.1728
-height = 34.8614
+radius = 15.8979
+height = 42.3758
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
-position = Vector2( 642.586, 361.802 )
+position = Vector2( 0.574707, -26.0875 )
 z_index = 1
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
@@ -26,10 +29,12 @@ animation = "idle0"
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -2.44815, 4.26168 )
+position = Vector2( -0.4579, 27.4814 )
+rotation = -1.60319
 shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( -1, 28 )
 current = true
 process_mode = 0
 smoothing_speed = 0.0
