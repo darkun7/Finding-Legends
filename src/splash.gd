@@ -9,10 +9,14 @@ func _ready():
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if(anim_name == "tape_open"):
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$tape.hide()
 		$AnimationPlayer.play("game_logo")
 	else:
 		get_tree().change_scene("res://src/page/story_page.tscn")
+=======
+		get_tree().change_scene("res://src/page/story_page.tscn")
+>>>>>>> parent of 3900510... Add some asset
 =======
 		get_tree().change_scene("res://src/page/story_page.tscn")
 >>>>>>> parent of 3900510... Add some asset
