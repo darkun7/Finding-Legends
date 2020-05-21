@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Finding Legends"
+config/name="Project"
 run/main_scene="res://src/splash.tscn"
 boot_splash/image="res://asset/img/splash/base.png"
 boot_splash/bg_color=Color( 0.756863, 0.815686, 0.847059, 1 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://src/page/pageController.gd" type="Script" id=1]
 [ext_resource path="res://asset/ui/page/background/bg_story.png" type="Texture" id=2]
@@ -13,16 +13,16 @@
 [ext_resource path="res://asset/font/ARLRDBD_0.TTF" type="DynamicFontData" id=11]
 [ext_resource path="res://asset/ui/utility/jilid_frame.res" type="PackedScene" id=12]
 [ext_resource path="res://asset/ui/utility/sidebar.png" type="Texture" id=13]
-[ext_resource path="res://asset/ui/utility/bab_button.res" type="PackedScene" id=14]
-[ext_resource path="res://asset/img/score_0.png" type="Texture" id=15]
-[ext_resource path="res://asset/ui/button/back.png" type="Texture" id=16]
-[ext_resource path="res://asset/ui/button/back_press.png" type="Texture" id=17]
-[ext_resource path="res://asset/ui/button/clue.png" type="Texture" id=18]
-[ext_resource path="res://asset/ui/button/clue_press.png" type="Texture" id=19]
-[ext_resource path="res://asset/ui/button/confirm.png" type="Texture" id=20]
-[ext_resource path="res://asset/ui/button/confirm_press2.png" type="Texture" id=21]
-[ext_resource path="res://src/window/setting_window.res" type="PackedScene" id=22]
-[ext_resource path="res://src/window/dialog_window.res" type="PackedScene" id=23]
+[ext_resource path="res://asset/ui/button/bab_group/btn_bab_normal.png" type="Texture" id=14]
+[ext_resource path="res://asset/ui/button/bab_group/btn_bab_active.png" type="Texture" id=15]
+[ext_resource path="res://asset/ui/button/bab_group/btn_bab_hover.png" type="Texture" id=16]
+[ext_resource path="res://asset/ui/button/back.png" type="Texture" id=17]
+[ext_resource path="res://asset/ui/button/back_press.png" type="Texture" id=18]
+[ext_resource path="res://asset/ui/button/clue.png" type="Texture" id=19]
+[ext_resource path="res://asset/ui/button/clue_press.png" type="Texture" id=20]
+[ext_resource path="res://asset/ui/button/confirm.png" type="Texture" id=21]
+[ext_resource path="res://asset/ui/button/confirm_press2.png" type="Texture" id=22]
+[ext_resource path="res://src/window/setting_window.res" type="PackedScene" id=23]
 [ext_resource path="res://src/transition.tscn" type="PackedScene" id=24]
 
 [sub_resource type="DynamicFont" id=1]
@@ -38,15 +38,18 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="DynamicFont" id=3]
-size = 28
+[sub_resource type="DynamicFont" id=4]
+size = 24
 outline_size = 3
-outline_color = Color( 1, 0.788235, 0.219608, 1 )
 use_filter = true
 font_data = ExtResource( 11 )
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 24
+font_data = ExtResource( 11 )
 
 [node name="story_page" type="Control"]
 anchor_right = 1.0
@@ -328,10 +331,9 @@ texture = ExtResource( 13 )
 [node name="title" type="Label" parent="side_panel"]
 anchor_right = 1.0
 margin_bottom = 58.0
-custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 1, 0.788235, 0.219608, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-text = "Pilih Bab"
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "CONTENT TEXT"
 align = 1
 valign = 1
 max_lines_visible = 1
@@ -342,35 +344,43 @@ margin_left = 11.0
 margin_top = 62.0
 margin_right = -12.0
 margin_bottom = 524.0
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 5 )
 
 [node name="scroll" type="ScrollContainer" parent="side_panel/panel"]
-editor/display_folded = true
 margin_left = 16.0
-margin_top = 16.0
 margin_right = 361.0
-margin_bottom = 394.0
+margin_bottom = 448.0
 scroll_horizontal_enabled = false
 
 [node name="contain" type="VBoxContainer" parent="side_panel/panel/scroll"]
+margin_right = 310.0
+margin_bottom = 92.0
 
-[node name="bab_" parent="side_panel/panel/scroll/contain" instance=ExtResource( 14 )]
-visible = false
+[node name="bab_sample" type="TextureButton" parent="side_panel/panel/scroll/contain"]
+margin_right = 310.0
+margin_bottom = 92.0
+focus_mode = 1
+enabled_focus_mode = 1
+texture_normal = ExtResource( 14 )
+texture_pressed = ExtResource( 15 )
+texture_hover = ExtResource( 16 )
+texture_focused = ExtResource( 15 )
 
-[node name="score" type="TextureRect" parent="side_panel/panel"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+[node name="Label" type="Label" parent="side_panel/panel/scroll/contain/bab_sample"]
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -185.0
-margin_top = -61.0
-margin_right = 185.0
-margin_bottom = -14.0
-texture = ExtResource( 15 )
-stretch_mode = 4
+margin_left = 45.0
+margin_top = 11.0
+margin_right = -30.0
+margin_bottom = -11.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "1: Kalimat Judul Aksi"
+valign = 1
+autowrap = true
+max_lines_visible = 2
 
 [node name="action_btn_group" type="HBoxContainer" parent="side_panel"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 11.0
@@ -379,40 +389,31 @@ margin_right = -12.0
 margin_bottom = -14.0
 alignment = 1
 
-[node name="btn_return" type="TextureButton" parent="side_panel/action_btn_group" groups=[
-"action_btn",
-]]
+[node name="btn_return" type="TextureButton" parent="side_panel/action_btn_group"]
 margin_left = 36.0
 margin_right = 107.0
 margin_bottom = 71.0
-texture_normal = ExtResource( 16 )
-texture_pressed = ExtResource( 17 )
-texture_hover = ExtResource( 17 )
+texture_normal = ExtResource( 17 )
+texture_pressed = ExtResource( 18 )
+texture_hover = ExtResource( 18 )
 
-[node name="btn_clue" type="TextureButton" parent="side_panel/action_btn_group" groups=[
-"action_btn",
-]]
+[node name="btn_clue" type="TextureButton" parent="side_panel/action_btn_group"]
 margin_left = 111.0
 margin_right = 182.0
 margin_bottom = 71.0
-texture_normal = ExtResource( 18 )
-texture_pressed = ExtResource( 19 )
-texture_hover = ExtResource( 19 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 20 )
+texture_hover = ExtResource( 20 )
 
-[node name="btn_confirm" type="TextureButton" parent="side_panel/action_btn_group" groups=[
-"action_btn",
-]]
+[node name="btn_confirm" type="TextureButton" parent="side_panel/action_btn_group"]
 margin_left = 186.0
 margin_right = 333.0
 margin_bottom = 71.0
-texture_normal = ExtResource( 20 )
-texture_pressed = ExtResource( 21 )
-texture_hover = ExtResource( 21 )
+texture_normal = ExtResource( 21 )
+texture_pressed = ExtResource( 22 )
+texture_hover = ExtResource( 22 )
 
-[node name="setting_window" parent="." instance=ExtResource( 22 )]
-visible = false
-
-[node name="dialog_window" parent="." instance=ExtResource( 23 )]
+[node name="setting_window" parent="." instance=ExtResource( 23 )]
 visible = false
 
 [node name="transition" parent="." instance=ExtResource( 24 )]
