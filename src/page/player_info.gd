@@ -59,14 +59,15 @@ func _get_apple()->String:
 			for i in range(5-temp,6):
 				get_node(path+(str(i))).texture = tex_apple_empty
 		else:
-			print("apple",apple)
 			temp = int((apple/2)+1)
+			for i in range(1,6):
+				get_node(path+(str(i))).texture = tex_apple_empty
 			for i in range(1,temp):
 				get_node(path+(str(i))).texture = tex_apple_full
 			if(temp>0):
 				get_node(path+(str(temp))).texture = tex_apple_half
-			for i in range(temp,6):
-				print(i)
+			#for i in range(temp,6):
+			#	print(i)
 			#	get_node(path+(str(i))).texture = tex_apple_empty
 			#get_node(path+"1")
 			pass #ganjil
@@ -108,5 +109,28 @@ func get_data_penghargaan():
 	return value 
 
 func _on_apple_regen_timeout():
-	DB.pushJSON(["ap"], [get_data_pemain()["ap"]+1], "pemain")
+	set_pemain_value("apel", "+", 1)
+
+func set_pemain_value(atr: String, type: String, value: int):
+	var kind
+	match atr:
+		"apel":
+			kind = "ap"
+		"koin":
+			kind = "ko"
+	match type:
+		"+":
+			DB.pushJSON(["ap"], [get_data_pemain()[kind]+value], "pemain")
+		"-":
+			DB.pushJSON(["ap"], [get_data_pemain()[kind]-value], "pemain")
 	_update_data()
+	pass
+
+func get_pemain_value(atr: String):
+	var kind
+	match atr:
+		"apel":
+			kind = "ap"
+		"koin":
+			kind = "ko"
+	return get_data_pemain()[kind]
