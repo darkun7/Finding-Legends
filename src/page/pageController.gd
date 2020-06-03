@@ -81,3 +81,7 @@ func select_achievement():
 
 func show_achievement_desc():
 	pass
+
+
+func _on_jilid_sample_pressed():
+	get_tree().change_scene("res://src/terrain/village1.tscn")

@@ -6,6 +6,8 @@ export var ROLL_SPEED = 120
 export var FRICTION = 2000
 onready var joystick = get_parent().get_node("CanvasLayer/joystick/joystick_button")
 
+signal lewatmamang
+
 enum {
 	MOVE,
 	ROLL,
@@ -15,13 +17,18 @@ enum {
 var state = MOVE
 var velocity = Vector2.ZERO
 var roll_vector = Vector2.DOWN
-
+onready var tilemap = get_parent().get_node("TileMap3")
 
 func _ready():
 	randomize()
 
 func _physics_process(delta):
 	move_and_slide(joystick.get_value()*MAX_SPEED*0.75)
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision:
+			emit_signal('lewatmamang', collision)
+	
 	match state:
 		MOVE:
 			move_state(delta)

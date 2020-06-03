@@ -262,6 +262,9 @@ margin_top = 14.0
 margin_right = -1.0
 margin_bottom = -9.0
 scroll_vertical_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="contain" type="HBoxContainer" parent="panel/scroll"]
 margin_right = 950.0
@@ -439,3 +442,4 @@ margin_bottom = -660.0
 [connection signal="button_up" from="nav/nav_btn_group/btn_setting" to="." method="_btn_setting_onpress"]
 [connection signal="button_up" from="nav/nav_btn_group/btn_achievement" to="." method="_btn_achievement_onpress"]
 [connection signal="button_up" from="nav/nav_btn_group/btn_story" to="." method="_btn_story_onpress"]
+[connection signal="pressed" from="panel/scroll/contain/jilid_sample" to="." method="_on_jilid_sample_pressed"]
