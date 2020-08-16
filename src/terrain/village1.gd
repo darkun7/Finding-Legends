@@ -19,10 +19,4 @@ func _process(delta):
 #	pass
 
 
-func _on_player_lewatmamang(collision):
-	if collision.slider is TileMap:
-		var tile_pos = collision.slider.world_to_map($Character.position)
-		tile_pos -= collision.normal  # Colliding tile
-		var tile = collision.slider.get_cellv(tile_pos)
-		if tile > 0:
-			$TileMap3.set_cellv(tile_pos, tile-1)
+
