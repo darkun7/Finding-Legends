@@ -1,7 +1,9 @@
 extends KinematicBody2D
 
-export var speed = 256 # big number because it's multiplied by delta
-export var tile_size = 120 # size in pixels of tiles on the grid
+onready var ray = $RayCast2D
+
+var speed = 256 # big number because it's multiplied by delta
+var tile_size = 120 # size in pixels of tiles on the grid
 
 var last_position = Vector2() # last idle position
 var target_position = Vector2() # desired position to move towards
@@ -14,10 +16,14 @@ func _ready():
 
 func _process(delta):
 	# MOVEMENT
-	position += speed * movedir * delta
+	if ray.is_colliding():
+		position = last_position
+		target_position = last_position
+	else:
+		position += speed * movedir * delta
 		
-	if position.distance_to(last_position) >= tile_size - speed * delta: # if we've moved further than one space
-		position = target_position # snap the player to the intended position
+		if position.distance_to(last_position) >= tile_size - speed * delta: # if we've moved further than one space
+			position = target_position # snap the player to the intended position
 	
 	# IDLE
 	if position == target_position:
@@ -37,3 +43,5 @@ func get_movedir():
 	
 	if movedir.x != 0 && movedir.y != 0: # prevent diagonals
 		movedir = Vector2.ZERO
+	if movedir != Vector2.ZERO:
+		ray.cast_to = movedir * tile_size / 2
